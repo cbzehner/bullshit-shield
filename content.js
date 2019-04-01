@@ -1,7 +1,7 @@
 const root = document.body;
 const walker = document.createTreeWalker(
   root,
-  NodeFilter.SHOW_ELEMENT,
+  NodeFilter.SHOW_ALL,
   null,
   false
 );
@@ -15,18 +15,11 @@ while (walker.nextNode()) {
   const current = walker.currentNode;
   const isCandidateNode =
     current.childElementCount === 0 || current.tagName === "P";
-  if (current.textContent.includes("JavaScript")) {
-    console.log(current);
-    debugger;
-  }
 
   if (isCandidateNode && current.textContent) {
     terms.forEach(term => {
       if (current.textContent.includes(term)) {
-        if (current.textContent.includes("JavaScript")) {
-          console.log(current);
-          debugger;
-        }
+        // TODO: Avoid splitting the terms if they're part of a hyperlink
         const contents = current.innerHTML.split(term);
         current.innerHTML = contents.join(
           `<span class="${redactionClass}">${term}</span>`
