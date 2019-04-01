@@ -3,17 +3,35 @@
   "description": "Protect yourself from double-speak 🛡️🐃💩",
   "version": "1.0",
   "manifest_version": 2,
-  "browser_action": {
-    "default_popup": "menu.html",
-    "default_icon": "icon.png"
+  "permissions": ["activeTab", "declarativeContent", "storage"],
+  "icons": {
+    "16": "assets/icon16.png",
+    "24": "assets/icon24.png",
+    "32": "assets/icon32.png",
+    "48": "assets/icon48.png",
+    "128": "assets/icon128.png",
+    "256": "assets/icon128.png"
   },
-  "commands": {
-    "_execute_browser_action": {
-      "suggested_key": {
-        "default": "Ctrl+Shift+F",
-        "mac": "MacCtrl+Shift+F"
-      },
-      "description": "Opens the Menu"
+  "browser_action": {
+    "default_popup": "popp.html",
+    "default_icon": {
+      "16": "assets/icon16.png",
+      "24": "assets/icon24.png",
+      "32": "assets/icon32.png",
+      "48": "assets/icon48.png",
+      "128": "assets/icon128.png",
+      "256": "assets/icon128.png"
     }
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "css": ["styles.css"]
+    }
+  ],
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": false
   }
 }
