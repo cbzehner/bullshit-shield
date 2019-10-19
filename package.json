@@ -1,0 +1,40 @@
+{
+  "name": "bullshit shield",
+  "version": "0.1.0",
+  "description": "Protect yourself from double-speak 🛡️ 🐃 💩",
+  "repository": "git@github.com:cbzehner/bors-armor.git",
+  "author": "Chris Zehner <cbzehner@gmail.com>",
+  "license": "GPL-3.0-or-later",
+  "private": true,
+  "scripts": {
+    "build": "yarn build-dev",
+    "build-dev": "yarn webpack --config webpack/webpack.dev.js",
+    "build-prod": "yarn webpack --config webpack/webpack.prod.js",
+    "zip": "yarn build-prod && zip -r bullshit-shield.zip build/",
+    "watch": "yarn build-dev --watch"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^8.1.0",
+    "@commitlint/config-conventional": "^8.1.0",
+    "clean-webpack-plugin": "^3.0.0",
+    "copy-webpack-plugin": "^5.0.4",
+    "css-loader": "^3.2.0",
+    "extract-loader": "^3.1.0",
+    "file-loader": "^4.2.0",
+    "html-loader": "^0.5.5",
+    "html-webpack-plugin": "^3.2.0",
+    "husky": "^3.0.5",
+    "precise-commits": "^1.0.2",
+    "prettier": "1.18.2",
+    "style-loader": "^1.0.0",
+    "webpack": "^4.39.3",
+    "webpack-cli": "^3.3.8",
+    "webpack-merge": "^4.2.2"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "precise-commits",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  }
+}
