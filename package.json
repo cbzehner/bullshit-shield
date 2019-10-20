@@ -34,5 +34,8 @@
       "pre-commit": "precise-commits",
       "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
     }
+  },
+  "dependencies": {
+    "findandreplacedomtext": "^0.4.6"
   }
 }

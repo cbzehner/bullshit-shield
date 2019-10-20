@@ -1598,6 +1598,11 @@ find-up@^4.0.0:
     locate-path "^5.0.0"
     path-exists "^4.0.0"
 
+findandreplacedomtext@^0.4.6:
+  version "0.4.6"
+  resolved "https://registry.yarnpkg.com/findandreplacedomtext/-/findandreplacedomtext-0.4.6.tgz#aafec3049adba195e7e93c050c2abb7823a5835f"
+  integrity sha512-CVRIKbEwfWoKTSnLrmyX26WjMY7o0aUUTm0RXN47fF/eHINJa8C+YHZxGagC7gMWVaAEBFwH7uVXuhwZcylWOQ==
+
 findup-sync@3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/findup-sync/-/findup-sync-3.0.0.tgz#17b108f9ee512dfb7a5c7f3c8b27ea9e1a9c08d1"

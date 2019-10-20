@@ -14,7 +14,8 @@
     {
       "matches": ["<all_urls>"],
       "js": ["content.js"],
-      "css": ["css/censors.css"]
+      "css": ["css/censors.css"],
+      "run_at": "document_end"
     }
   ],
   "background": {
