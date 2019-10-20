@@ -2,13 +2,16 @@ const webpack = require("webpack")
 const path = require("path")
 const { CleanWebpackPlugin } = require("clean-webpack-plugin")
 const CopyWebpackPlugin = require("copy-webpack-plugin")
+const HtmlWebpackPlugin = require("html-webpack-plugin")
 
 const rootPath = path.join(__dirname, "./..")
 
 const options = {
   entry: {
-    content: `${rootPath}/src/js/censor.js`,
+    censor: `${rootPath}/src/js/censor.js`,
+    countTerms: `${rootPath}/src/js/countTerms.js`,
     background: `${rootPath}/src/js/background.js`,
+    popup: `${rootPath}/src/js/popup.js`,
   },
   output: {
     path: `${rootPath}/build`,
@@ -20,10 +23,20 @@ const options = {
         test: /\.css$/,
         use: ["style-loader", "css-loader"],
       },
+      {
+        test: /\.html$/,
+        use: ["html-loader"],
+      },
     ],
   },
   plugins: [
     new CleanWebpackPlugin(), // Clean `build/` between webpack runs
+    new HtmlWebpackPlugin({
+      // Load HTML files
+      template: `${rootPath}/src/html/popup.html`,
+      filename: "popup.html",
+      chunks: ["popup"],
+    }),
     // TODO: Fix --watch mode issue with suggestion from https://github.com/webpack-contrib/copy-webpack-plugin/issues/252#issuecomment-427322809
     new CopyWebpackPlugin([
       // Copy static assets into `build/`
@@ -46,6 +59,11 @@ const options = {
         from: "icons/*.png",
         to: `${rootPath}/build`,
         context: `${rootPath}/src/`,
+      },
+    ]),
+    new CopyWebpackPlugin([
+      {
+        from: "node_modules/webextension-polyfill/dist/browser-polyfill.js",
       },
     ]),
   ],

@@ -10,16 +10,20 @@
     "128": "icons/icon128.png",
     "256": "icons/icon128.png"
   },
+  "browser_action": {
+    "default_title": "Bullshit Shield",
+    "default_popup": "popup.html"
+  },
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
-      "js": ["content.js"],
+      "js": ["browser-polyfill.js", "censor.js", "countTerms.js"],
       "css": ["css/censors.css"],
-      "run_at": "document_end"
+      "run_at": "document_idle"
     }
   ],
   "background": {
-    "scripts": ["background.js"],
+    "scripts": ["browser-polyfill.js", "background.js"],
     "persistent": false
   }
 }

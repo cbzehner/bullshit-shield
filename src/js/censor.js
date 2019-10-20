@@ -1,28 +1,32 @@
 /**
  * Walk the webpage, censoring terms
  */
+import browser from "webextension-polyfill"
 import findAndReplaceDOMText from "findandreplacedomtext"
-import bullshitTerms from "./terms"
 
-// const censor = () => {
-//   chrome.runtime.sendMessage({ message: "censoredTerms" }, response => {
-//     if (response.terms) {
-//       censorBullshit(response.terms)
-//     }
-//   })
-// }
+/**
+ * Censor any terms appearing in the document that may be bullshit
+ */
+const censorDocument = async () => {
+  const { terms } = await browser.storage.sync.get("terms")
+  if (!terms) return []
 
-const censorBullshit = () => {
-  const bullshitRe = new RegExp(`\\b(${bullshitTerms.join("|")})\\b`, "gi")
-  const redactionClass = "blurred" // Options: blurred invisible-ink redacted
+  applyCensorship(terms)
+}
+
+/**
+ * Obscure the page content matching the list of censored terms
+ */
+const applyCensorship = async terms => {
+  const termsRegex = new RegExp(`\\b(${terms.join("|")})\\b`, "gi")
+  const { redaction } = await browser.storage.sync.get("redaction")
 
   findAndReplaceDOMText(document.body, {
-    find: bullshitRe,
+    find: termsRegex,
     wrap: "span",
-    wrapClass: redactionClass,
+    wrapClass: redaction, // CSS classname to apply selected censorship styling
     preset: "prose",
   })
 }
 
-censorBullshit()
-// censor()
+censorDocument()
