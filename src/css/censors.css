@@ -2,16 +2,20 @@
  * The available censorship styles
  */
 
-:root {
-  --white: #fafafa;
-}
-
 .blurred {
   filter: blur(6px);
 }
 
+.blurred:hover {
+  filter: none;
+}
+
 .invisible-ink {
   color: rgba(0, 0, 0, 0);
+}
+
+.invisible-ink:hover {
+  color: inherit;
 }
 
 .redacted {

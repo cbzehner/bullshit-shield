@@ -3,29 +3,18 @@
   "manifest_version": 2,
   "permissions": ["activeTab", "declarativeContent", "storage"],
   "icons": {
-    "16": "assets/icon16.png",
-    "24": "assets/icon24.png",
-    "32": "assets/icon32.png",
-    "48": "assets/icon48.png",
-    "128": "assets/icon128.png",
-    "256": "assets/icon128.png"
-  },
-  "page_action": {
-    "default_popup": "popup.html",
-    "default_icon": {
-      "16": "assets/icon16.png",
-      "24": "assets/icon24.png",
-      "32": "assets/icon32.png",
-      "48": "assets/icon48.png",
-      "128": "assets/icon128.png",
-      "256": "assets/icon128.png"
-    }
+    "16": "icons/icon16.png",
+    "24": "icons/icon24.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png",
+    "256": "icons/icon128.png"
   },
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
-      "js": ["censor.js"],
-      "css": ["censor.css"]
+      "js": ["content.js"],
+      "css": ["css/censors.css"]
     }
   ],
   "background": {
