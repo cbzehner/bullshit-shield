@@ -11,7 +11,7 @@
     "build-dev": "yarn webpack --config webpack/webpack.dev.js",
     "build-prod": "yarn webpack --config webpack/webpack.prod.js",
     "zip": "yarn build-prod && zip -r bullshit-shield.zip build/",
-    "watch": "yarn build-dev --watch"
+    "watch": "watchexec -w . 'yarn build'"
   },
   "devDependencies": {
     "@commitlint/cli": "^8.1.0",

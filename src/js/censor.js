@@ -12,6 +12,8 @@ const censorDocument = async () => {
   if (!terms) return []
 
   applyCensorship(terms)
+
+  return browser.runtime.sendMessage({ message: "updateTermsCount" })
 }
 
 /**

@@ -444,7 +444,6 @@ export default [
   "traction",
   "transfor(m|ming)",
   "trends?",
-  "true",
   "truths?",
   "turnkey",
   "ultimate",

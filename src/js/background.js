@@ -27,7 +27,7 @@ const initializeStorage = async () => {
 /**
  * Handle messages passed to background.js
  */
-const handleMessages = async (request, _sender, _sendResponse) => {
+const handleMessages = async (request, sender, _sendResponse) => {
   switch (request.message) {
     case "enable":
       // TODO: Re-run the script when activating the extension
@@ -36,6 +36,9 @@ const handleMessages = async (request, _sender, _sendResponse) => {
     case "disable":
       // TODO: Undo the extension actions when activating
       disableExtension(request.tabId)
+      break
+    case "updateTermsCount":
+      updateTermsCount({ tabId: sender.tab.id })
       break
   }
 
@@ -72,7 +75,7 @@ const updateTermsCount = async activeInfo => {
     const { count } = await browser.tabs.sendMessage(tabId, "countTerms")
     await browser.browserAction.setBadgeText({ text: `${count}`, tabId: tabId })
   } catch (error) {
-    console.warn(`Bullshit Shield: ${error.message}`)
+    browser.browserAction.disable()
     return false
   }
 
