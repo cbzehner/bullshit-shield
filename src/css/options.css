@@ -2,11 +2,31 @@
  * Styles for the options page
  */
 
-.censorship-modes-list {
+body {
+  min-width: 30rem;
+  font-size: 1rem;
+}
+
+ul.censorship-modes-list,
+ul.censorship-terms-list {
   list-style: none;
   padding-inline-start: 1rem;
 }
 
-.censorship-modes-list > li {
+ul.censorship-modes-list > li {
   margin: 1rem 0;
+}
+
+ul.censorship-terms-list > li {
+  margin: 0.5rem 0;
+  font-weight: 500;
+}
+
+div.wrapper {
+  display: flex;
+  margin: 0.5rem 0;
+}
+
+li.censorship-term {
+  margin-left: 0.5rem;
 }
