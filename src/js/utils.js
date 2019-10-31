@@ -8,8 +8,8 @@ import browser from "webextension-polyfill"
  * Count the censored terms on a Page
  */
 export const countTerms = async () => {
-  const { redaction } = await browser.storage.sync.get("redaction")
-  return document.querySelectorAll(`span.${redaction}`).length
+  const { redactionMode } = await browser.storage.sync.get("redactionMode")
+  return document.querySelectorAll(`span.${redactionMode}`).length
 }
 
 /**

@@ -11,6 +11,7 @@ const options = {
     content: `${rootPath}/src/js/content.js`,
     background: `${rootPath}/src/js/background.js`,
     popup: `${rootPath}/src/js/popup.js`,
+    options: `${rootPath}/src/js/options.js`,
   },
   output: {
     path: `${rootPath}/build`,
@@ -35,6 +36,12 @@ const options = {
       template: `${rootPath}/src/html/popup.html`,
       filename: "popup.html",
       chunks: ["popup"],
+    }),
+    new HtmlWebpackPlugin({
+      // Load HTML files
+      template: `${rootPath}/src/html/options.html`,
+      filename: "options.html",
+      chunks: ["options"],
     }),
     // TODO: Fix --watch mode issue with suggestion from https://github.com/webpack-contrib/copy-webpack-plugin/issues/252#issuecomment-427322809
     new CopyWebpackPlugin([

@@ -12,10 +12,12 @@ const initializeStorage = async () => {
   const { terms } = await browser.storage.sync.get("terms")
   if (terms) return // Terms have already been set
 
-  // TODO: Make this user configurable
-  const redaction = "blurred" // Options: blurred invisible-ink redacted
+  const defaultRedactionMode = "blurred"
 
-  return browser.storage.sync.set({ terms: defaultTerms, redaction })
+  return browser.storage.sync.set({
+    terms: defaultTerms,
+    redactionMode: defaultRedactionMode,
+  })
 }
 
 /**
@@ -51,19 +53,6 @@ const enableExtension = async () => {
 const disableExtension = async () => {
   const activeTab = await fetchActiveTab()
   browser.tabs.sendMessage(activeTab.id, { message: "uncensor" })
-}
-
-/**
- * Get the count of censored terms for the active tab
- */
-const countCensoredTerms = async () => {
-  const activeTab = await fetchActiveTab()
-  const result = await browser.tabs.sendMessage(activeTab.id, {
-    message: "getCountFromTab",
-  })
-  const { count } = result
-  console.log(`current count is ${count}`)
-  return Promise.resolve({ count })
 }
 
 /**

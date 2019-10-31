@@ -1,0 +1,12 @@
+/**
+ * Styles for the options page
+ */
+
+.censorship-modes-list {
+  list-style: none;
+  padding-inline-start: 1rem;
+}
+
+.censorship-modes-list > li {
+  margin: 1rem 0;
+}

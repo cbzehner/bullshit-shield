@@ -24,12 +24,12 @@ export const censorDocument = async () => {
  */
 const applyCensorship = async terms => {
   const termsRegex = new RegExp(`\\b(${terms.join("|")})\\b`, "gi")
-  const { redaction } = await browser.storage.sync.get("redaction")
+  const { redactionMode } = await browser.storage.sync.get("redactionMode")
 
   findAndReplaceDOMText(document.body, {
     find: termsRegex,
     wrap: "span",
-    wrapClass: redaction, // CSS classname to apply selected censorship styling
+    wrapClass: redactionMode, // CSS classname to apply selected censorship styling
     preset: "prose",
   })
 }
@@ -38,10 +38,10 @@ const applyCensorship = async terms => {
  * Remove any CSS classes used to censor the document
  */
 export const uncensorDocument = async () => {
-  const { redaction } = await browser.storage.sync.get("redaction")
-  const terms = document.querySelectorAll(`span.${redaction}`)
+  const { redactionMode } = await browser.storage.sync.get("redactionMode")
+  const terms = document.querySelectorAll(`span.${redactionMode}`)
 
-  terms.forEach(term => term.classList.remove(redaction))
+  terms.forEach(term => term.classList.remove(redactionMode))
 
   await browser.storage.sync.set({ active: false })
 
