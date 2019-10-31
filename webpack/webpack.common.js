@@ -8,8 +8,7 @@ const rootPath = path.join(__dirname, "./..")
 
 const options = {
   entry: {
-    censor: `${rootPath}/src/js/censor.js`,
-    countTerms: `${rootPath}/src/js/countTerms.js`,
+    content: `${rootPath}/src/js/content.js`,
     background: `${rootPath}/src/js/background.js`,
     popup: `${rootPath}/src/js/popup.js`,
   },

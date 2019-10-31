@@ -1,7 +1,7 @@
 {
   "name": "Bullshit Shield",
   "manifest_version": 2,
-  "permissions": ["activeTab", "declarativeContent", "storage"],
+  "permissions": ["storage"],
   "icons": {
     "16": "icons/icon16.png",
     "24": "icons/icon24.png",
@@ -17,7 +17,7 @@
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
-      "js": ["browser-polyfill.js", "censor.js", "countTerms.js"],
+      "js": ["browser-polyfill.js", "content.js"],
       "css": ["css/censors.css"],
       "run_at": "document_idle"
     }

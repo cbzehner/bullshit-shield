@@ -3,16 +3,10 @@
  */
 import browser from "webextension-polyfill"
 import defaultTerms from "./terms"
+import { fetchActiveTab } from "./utils"
 
 /**
  * Set default values when the extension is first installed
- */
-const initializeBackground = async () => {
-  return initializeStorage()
-}
-
-/**
- * Set initial values for stored websites
  */
 const initializeStorage = async () => {
   const { terms } = await browser.storage.sync.get("terms")
@@ -25,63 +19,66 @@ const initializeStorage = async () => {
 }
 
 /**
- * Handle messages passed to background.js
+ * Handle messages passed to background script
  */
-const handleMessages = async (request, sender, _sendResponse) => {
+const handleMessages = async (request, sender, _) => {
   switch (request.message) {
     case "enable":
-      // TODO: Re-run the script when activating the extension
-      enableExtension(request.tabId)
-      break
+      return enableExtension()
     case "disable":
-      // TODO: Undo the extension actions when activating
-      disableExtension(request.tabId)
-      break
-    case "updateTermsCount":
-      updateTermsCount({ tabId: sender.tab.id })
-      break
+      return disableExtension()
+    case "updateBadge":
+      if (request.active) {
+        setBadgeCount({ tabId: sender.tab.id, count: request.count })
+      }
+      return setBadgeColor({ tabId: sender.tab.id, active: request.active })
   }
 
   return true
 }
 
 /**
- * Enable the browser Extension when clicked
+ * Enable the browser extension when clicked
  */
-const enableExtension = tabId => {
-  console.log("Adding Bullshit Shield. TODO: Fill me in!")
-
-  // browser.tabs.executeScript({ file: "censor.js" })
-
-  // browser.browserAction.enable(tabId, addShield)
+const enableExtension = async () => {
+  const activeTab = await fetchActiveTab()
+  browser.tabs.sendMessage(activeTab.id, { message: "censor" })
 }
 
 /**
- * Disable the browser Extension when clicked
+ * Disable the browser extension when clicked
  */
-const disableExtension = tabId => {
-  console.log("Removing Bullshit Shield. TODO: Fill me in!")
-
-  // browser.browserAction.disable(tabId, removeShield)
+const disableExtension = async () => {
+  const activeTab = await fetchActiveTab()
+  browser.tabs.sendMessage(activeTab.id, { message: "uncensor" })
 }
 
 /**
- * Run the countTerms content script on the active tab and update the icon count
+ * Get the count of censored terms for the active tab
  */
-const updateTermsCount = async activeInfo => {
-  const { tabId } = activeInfo
-
-  try {
-    const { count } = await browser.tabs.sendMessage(tabId, "countTerms")
-    await browser.browserAction.setBadgeText({ text: `${count}`, tabId: tabId })
-  } catch (error) {
-    browser.browserAction.disable()
-    return false
-  }
-
-  return true
+const countCensoredTerms = async () => {
+  const activeTab = await fetchActiveTab()
+  const result = await browser.tabs.sendMessage(activeTab.id, {
+    message: "getCountFromTab",
+  })
+  const { count } = result
+  console.log(`current count is ${count}`)
+  return Promise.resolve({ count })
 }
 
-browser.runtime.onInstalled.addListener(initializeBackground) // Installing extension
-browser.tabs.onActivated.addListener(updateTermsCount) // Switching tabs
+/**
+ * Set the count of terms displayed on the browser action
+ */
+const setBadgeCount = ({ tabId, count }) =>
+  browser.browserAction.setBadgeText({ text: `${count}`, tabId })
+
+/**
+ * Set the background color of the count displayed on the browser action
+ */
+const setBadgeColor = ({ tabId, active }) => {
+  const color = active ? "#0084d0" : "#bd5757"
+  browser.browserAction.setBadgeBackgroundColor({ color, tabId })
+}
+
+browser.runtime.onInstalled.addListener(initializeStorage) // Only run at initial installation
 browser.runtime.onMessage.addListener(handleMessages) // Handle message passing

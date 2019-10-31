@@ -1,6 +1,6 @@
 {
   "name": "bullshit-shield",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Protect yourself from double-speak 🛡️ 🐃 💩",
   "repository": "git@github.com:cbzehner/bors-armor.git",
   "author": "Chris Zehner <cbzehner@gmail.com>",
@@ -12,6 +12,10 @@
     "build-prod": "yarn webpack --config webpack/webpack.prod.js",
     "zip": "yarn build-prod && zip -r bullshit-shield.zip build/",
     "watch": "watchexec -w . 'yarn build'"
+  },
+  "dependencies": {
+    "findandreplacedomtext": "^0.4.6",
+    "webextension-polyfill": "^0.5.0"
   },
   "devDependencies": {
     "@commitlint/cli": "^8.1.0",
@@ -36,9 +40,5 @@
       "pre-commit": "precise-commits",
       "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
     }
-  },
-  "dependencies": {
-    "findandreplacedomtext": "^0.4.6",
-    "webextension-polyfill": "^0.5.0"
   }
 }
