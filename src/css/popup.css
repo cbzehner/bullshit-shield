@@ -3,6 +3,9 @@ body {
 }
 
 h1 {
+  display: flex;
+  align-items: center;
+
   margin: 0;
   padding: 0.5rem;
 
@@ -11,6 +14,39 @@ h1 {
 
   font-size: 1rem;
   font-weight: 600;
+}
+
+.menu-container {
+  display: inline-block;
+  margin-left: 1rem;
+  cursor: pointer;
+}
+
+.bar1,
+.bar2,
+.bar3 {
+  width: 1rem;
+  height: 2px;
+  background-color: #ffffff;
+  margin: 3px 0;
+  transition: 0.4s;
+}
+
+/* Rotate first bar */
+.change .bar1 {
+  -webkit-transform: rotate(-45deg) translate(-9px, 6px);
+  transform: rotate(-45deg) translate(-9px, 6px);
+}
+
+/* Fade out the second bar */
+.change .bar2 {
+  opacity: 0;
+}
+
+/* Rotate last bar */
+.change .bar3 {
+  -webkit-transform: rotate(45deg) translate(-8px, -8px);
+  transform: rotate(45deg) translate(-8px, -8px);
 }
 
 .rocker {

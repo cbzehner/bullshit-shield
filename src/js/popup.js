@@ -13,6 +13,9 @@ const initializePopup = async () => {
   checkbox.checked = active ? true : false
 
   checkbox.onclick = async () => await handleClick(checkbox)
+
+  const optionsMenu = document.querySelector("div.menu-container")
+  optionsMenu.onclick = async () => browser.runtime.openOptionsPage()
 }
 
 /**
