@@ -16,4 +16,6 @@ Styles from [this CodePen](https://codepen.io/adamruf/pen/GZwdrY) by [Adam Ruf](
 
 Rocker Toggle in the extension popup from [this CodePen](https://codepen.io/marcusconnor/pen/QJNvMa) by [Marcus Connor](https://marcusconnor.com/)
 
+Add Term button from the options page inspired by [this CodePen](https://codepen.io/visualcookie/pen/kkwxPm) by [Daniel Luca](danielluca.com)
+
 Shield Icon from [Webdesigner Depot](https://www.webdesignerdepot.com/) via [Icon Finder](https://www.iconfinder.com/icons/10499/protect_red_shield_icon)

@@ -25,12 +25,14 @@ const initializeCensorshipModes = async () => {
 
 const initializeCensorshipTerms = async () => {
   const { terms } = await browser.storage.sync.get("terms")
-  if (!terms) return // TODO: Add an append-element here for adding to the list
+  if (terms.length > 0) {
+    const fragment = createTermsList(terms)
+    const termsList = document.querySelector("ul.censorship-terms-list")
+    termsList.appendChild(fragment)
+  }
 
-  const fragment = createTermsList(terms)
-
-  const termsList = document.querySelector("ul.censorship-terms-list")
-  termsList.appendChild(fragment)
+  const addTermsForm = document.querySelector("form.add-term")
+  addTermsForm.onsubmit = handleAddTerm
 }
 
 /**
@@ -49,7 +51,7 @@ const createTermsList = terms => {
   const createRemoveButton = () => {
     const removeButton = document.createElement("div")
     removeButton.innerHTML = "&times;"
-    removeButton.onclick = async removeButton => handleRemoveTerm(removeButton)
+    removeButton.onclick = handleRemoveTerm
 
     return removeButton
   }
@@ -75,12 +77,24 @@ const handleSelectCensorshipMode = async radioInput =>
   browser.storage.sync.set({ redactionMode: radioInput.value })
 
 /**
+ * Add the selected term to the stored terms list
+ */
+const handleAddTerm = async event => {
+  const termToAdd = event.target.firstElementChild.textContent.trim()
+  const { terms } = await browser.storage.sync.get("terms")
+  const newTerms = terms ? terms : []
+  newTerms.push(termToAdd)
+  await browser.storage.sync.set({ terms: newTerms })
+}
+
+/**
  * Remove the selected term from storage and then delete it from the DOM
  */
 const handleRemoveTerm = async event => {
   const parentElem = event.target.parentElement
-  const termToRemove = parentElem.querySelector("li.censorship-term")
-    .textContent
+  const termToRemove = parentElem
+    .querySelector("li.censorship-term")
+    .textContent.trim()
 
   const { terms } = await browser.storage.sync.get("terms")
   const newTerms = terms.filter(term => term !== termToRemove)
